@@ -1,4 +1,4 @@
-export default function Cartfield({ value }) {
+export default function Cartfield({ value, setViewCart }) {
   // Create our number formatter.
   const formatter = new Intl.NumberFormat("en-US", {
     style: "currency",
@@ -19,7 +19,8 @@ export default function Cartfield({ value }) {
       </div>
       <div className="text-right">
         <a
-          href="https://shop.zumbawear.eu/overview?collection=Current&amp;cg=Current"
+          href="#/"
+          onClick={() => setViewCart(true)}
           className="bg-indigo-800 text-white rounded py-1 px-2"
           id="view_cart"
         >

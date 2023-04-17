@@ -21,6 +21,7 @@ export default function Home({ products }) {
       quantity: 1,
     },
   });
+  const [viewCart, setViewCart] = useState(false);
 
   return (
     <div className="min-h-screen relative pb-24">
@@ -34,25 +35,31 @@ export default function Home({ products }) {
       <Header />
 
       <div className="container pt-16 px-4 h-full min-h-full">
-        <h3 className="mt-12 text-3xl">Current</h3>
-        <Filters
-          activeSeason={activeSeason}
-          setActiveSeason={setActiveSeason}
-          activeTag={activeTag}
-          setActiveTag={setActiveTag}
-          seasons={seasons}
-          tags={tags}
-        />
+        {!viewCart ? (
+          <>
+            <h3 className="mt-12 text-3xl">Current</h3>
+            <Filters
+              activeSeason={activeSeason}
+              setActiveSeason={setActiveSeason}
+              activeTag={activeTag}
+              setActiveTag={setActiveTag}
+              seasons={seasons}
+              tags={tags}
+            />
 
-        <Products
-          activeSeason={activeSeason}
-          activeTag={activeTag}
-          products={products}
-        />
+            <Products
+              activeSeason={activeSeason}
+              activeTag={activeTag}
+              products={products}
+            />
+          </>
+        ) : (
+          <ViewCart />
+        )}
       </div>
 
       <Footer />
-      <Cartfield value={cart.total} />
+      <Cartfield value={cart.total} setViewCart={setViewCart} />
     </div>
   );
 }
@@ -60,18 +67,11 @@ export default function Home({ products }) {
 // Fetching data from the JSON file
 import fsPromises from "fs/promises";
 import path from "path";
+import ViewCart from "../components/ViewCart";
 export async function getStaticProps() {
   const filePath = path.join(process.cwd(), "\\public\\data.json");
   const jsonData = await fsPromises.readFile(filePath);
   const products = JSON.parse(jsonData);
-  console.log(typeof products);
-  //console.log("Products: ", products);
-  //console.log("JSON data: ", jsonData);
-
-  /* let seasons = [...new Set(Array.from(products).map((item) => item.season))];
-  let tags = [
-    ...new Set(Array.from(products).flatMap((item) => item.tags.split(","))),
-  ]; */
 
   return {
     props: products,

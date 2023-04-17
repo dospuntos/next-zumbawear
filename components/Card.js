@@ -1,15 +1,24 @@
+import { useState } from "react";
 import { generateFileName, nameToColor, funHash } from "../utils/helpers";
 
 export default function Card({ product }) {
   let sizes = product.size.split(",");
   let colors = product.color.split(",");
   let fileName = generateFileName(product, false);
+  const [edited, setEdited] = useState(false);
 
   if (colors.length < 2) {
     colors.push("Bold Black");
   }
   return (
-    <div className="mt-4 border-b border-gray-300 py-4 product">
+    <div
+      className="mt-4 border-b border-gray-300 py-4 product"
+      style={
+        edited
+          ? { backgroundColor: "rgb(254, 235, 200)" }
+          : { backgroundColor: "#fff" }
+      }
+    >
       <div className="flex px-4">
         <div className="w-32">
           <a
@@ -25,11 +34,6 @@ export default function Card({ product }) {
               style={{ width: 125, height: "auto" }}
             />
           </a>
-          {/* <img
-            src="https://4750be237d0d872b5566-68faac92c40bbd561b56e400eee74ddb.ssl.cf3.rackcdn.com/125/14331.jpg"
-            alt=""
-            style={{ width: 125, height: "auto" }}
-          /> */}
           <div>{product.item.split("-")[0]}</div>
           <div className="text-sm">{product.season}</div>
           <div>{product.date}</div>
@@ -73,6 +77,7 @@ export default function Card({ product }) {
                         className="order order-amount"
                         av="72"
                         name="order[888562354942]"
+                        onBlur={() => setEdited(true)}
                       />{" "}
                       {funHash(product.name + color + size)}
                     </td>
