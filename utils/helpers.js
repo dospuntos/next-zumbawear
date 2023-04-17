@@ -24,7 +24,7 @@ export function nameToColor(name) {
 export function generateFileName(product, extension = true) {
   // Replace all spaces in the strings with a hyphen (-)
   const newStr1 = product.name.replace(/\s+/g, "-");
-  const newStr2 = product.color.replace(/\s+/g, "-");
+  const newStr2 = product.color.split(",")[0].replace(/\s+/g, "-");
 
   // Concatenate the two strings with a hyphen in between
   const concatenatedStr = `${newStr1}-${newStr2}`;
