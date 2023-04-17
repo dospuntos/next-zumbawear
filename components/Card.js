@@ -1,5 +1,4 @@
-import Image from "next/image";
-import { generateFileName, nameToColor } from "../utils/helpers";
+import { generateFileName, nameToColor, funHash } from "../utils/helpers";
 
 export default function Card({ product }) {
   let sizes = product.size.split(",");
@@ -75,7 +74,7 @@ export default function Card({ product }) {
                         av="72"
                         name="order[888562354942]"
                       />{" "}
-                      50
+                      {funHash(product.name + color + size)}
                     </td>
                   ))}
                 </tr>

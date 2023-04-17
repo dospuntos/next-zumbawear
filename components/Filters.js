@@ -7,24 +7,11 @@ export default function Filters({
   setActiveSeason,
   activeTag,
   setActiveTag,
+  tags,
+  seasons,
 }) {
-  const [products, setProducts] = useState(null);
-
-  useEffect(() => {
-    async function fetchData() {
-      const res = await fetch("/data.json");
-      const data = await res.json();
-      setProducts(data);
-    }
-    fetchData();
-  }, []);
-
-  if (!products) {
-    return <div>Loading...</div>;
-  }
-
-  const seasons = [...new Set(products.map((item) => item.season))];
-  let tags = [...new Set(products.flatMap((item) => item.tags.split(",")))];
+  /* const seasons = [...new Set(products.map((item) => item.season))];
+  let tags = [...new Set(products.flatMap((item) => item.tags.split(",")))]; */
 
   return (
     <>

@@ -37,3 +37,14 @@ export function generateFileName(product, extension = true) {
 
   return urlSafeStr + (extension ? ".jpg" : "");
 }
+
+export function funHash(s) {
+  for (var i = 0, h = 0xdeadbeef; i < s.length; i++)
+    h = Math.imul(h ^ s.charCodeAt(i), 2654435761);
+  let result = (h ^ (h >>> 16)) >>> 0;
+  if (String(result).substring(0, 2) > 40) {
+    return 50;
+  } else {
+    return String(result).substring(0, 2);
+  }
+}

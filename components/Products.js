@@ -1,23 +1,7 @@
-import { useEffect, useState } from "react";
 import Card from "./Card";
 
-const Products = ({ activeSeason, activeTag }) => {
-  const [products, setProducts] = useState(null);
-
-  useEffect(() => {
-    async function fetchData() {
-      const res = await fetch("/data.json");
-      const data = await res.json();
-      setProducts(data);
-    }
-    fetchData();
-  }, []);
-
-  if (!products) {
-    return <div>Loading...</div>;
-  }
-
-  let filteredProducts = products;
+const Products = ({ activeSeason, activeTag, products }) => {
+  let filteredProducts = Array.from(products);
 
   if (activeSeason !== "") {
     filteredProducts = products.filter(

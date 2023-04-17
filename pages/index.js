@@ -6,7 +6,11 @@ import Filters from "../components/Filters";
 import { useState } from "react";
 import Cartfield from "../components/Cartfield";
 
-export default function Home() {
+export default function Home({ products }) {
+  let seasons = [...new Set(Array.from(products).map((item) => item.season))];
+  let tags = [
+    ...new Set(Array.from(products).flatMap((item) => item.tags.split(","))),
+  ];
   const [activeSeason, setActiveSeason] = useState("");
   const [activeTag, setActiveTag] = useState("");
   const [cart, setCart] = useState({
@@ -31,19 +35,45 @@ export default function Home() {
 
       <div className="container pt-16 px-4 h-full min-h-full">
         <h3 className="mt-12 text-3xl">Current</h3>
-
         <Filters
           activeSeason={activeSeason}
           setActiveSeason={setActiveSeason}
           activeTag={activeTag}
           setActiveTag={setActiveTag}
+          seasons={seasons}
+          tags={tags}
         />
 
-        <Products activeSeason={activeSeason} activeTag={activeTag} />
+        <Products
+          activeSeason={activeSeason}
+          activeTag={activeTag}
+          products={products}
+        />
       </div>
 
       <Footer />
       <Cartfield value={cart.total} />
     </div>
   );
+}
+
+// Fetching data from the JSON file
+import fsPromises from "fs/promises";
+import path from "path";
+export async function getStaticProps() {
+  const filePath = path.join(process.cwd(), "\\public\\data.json");
+  const jsonData = await fsPromises.readFile(filePath);
+  const products = JSON.parse(jsonData);
+  console.log(typeof products);
+  //console.log("Products: ", products);
+  //console.log("JSON data: ", jsonData);
+
+  /* let seasons = [...new Set(Array.from(products).map((item) => item.season))];
+  let tags = [
+    ...new Set(Array.from(products).flatMap((item) => item.tags.split(","))),
+  ]; */
+
+  return {
+    props: products,
+  };
 }
