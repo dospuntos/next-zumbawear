@@ -14,7 +14,7 @@ export default function Home({ products }) {
   const [activeSeason, setActiveSeason] = useState("");
   const [activeTag, setActiveTag] = useState("");
   const [cart, setCart] = useState({
-    total: 12,
+    total: 0,
     items: {
       name: "TEST",
       price: 12,
@@ -51,6 +51,8 @@ export default function Home({ products }) {
               activeSeason={activeSeason}
               activeTag={activeTag}
               products={products}
+              setCart={setCart}
+              cart={cart}
             />
           </>
         ) : (

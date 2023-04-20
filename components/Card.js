@@ -1,15 +1,40 @@
 import { useState } from "react";
-import { generateFileName, nameToColor, funHash } from "../utils/helpers";
+import {
+  generateFileName,
+  nameToColor,
+  funHash,
+  createNewInputs,
+  formatter,
+} from "../utils/helpers";
 
-export default function Card({ product }) {
+export default function Card({ product, setCart, cart }) {
   let sizes = product.size.split(",");
   let colors = product.color.split(",");
   let fileName = generateFileName(product, false);
   const [edited, setEdited] = useState(false);
+  const [cardTotal, setCardTotal] = useState(0);
+  const [inputs, setInputs] = useState(
+    createNewInputs(colors.length * sizes.length)
+  );
 
-  if (colors.length < 2) {
-    colors.push("Bold Black");
+  function handleInputChange(event) {
+    const { name, value } = event.target;
+    const index = inputs.findIndex((input) => input.name === name);
+
+    const updatedInputs = [...inputs];
+    updatedInputs[index].value = Number(value);
+    setInputs(updatedInputs);
+
+    // Add value of all input fields
+    const productCount = updatedInputs.reduce(
+      (sum, input) => sum + input.value,
+      0
+    );
+
+    // Calculate card total
+    setCardTotal(productCount * product.price);
   }
+
   return (
     <div
       className="mt-4 border-b border-gray-300 py-4 product"
@@ -57,33 +82,41 @@ export default function Card({ product }) {
                   </th>
                 ))}
               </tr>
-              {colors.map((color, index) => (
-                <tr key={index}>
-                  <td className="p-1">
-                    <span
-                      className="inline-block w-4 h-4"
-                      style={{ backgroundColor: nameToColor(color) }}
-                    ></span>
-                    <span> {color}</span>
-                  </td>
-                  {sizes.map((size) => (
-                    <td
-                      key={size}
-                      style={{ textAlign: "center" }}
-                      className="p-2"
-                    >
-                      <input
-                        type="number"
-                        className="order order-amount"
-                        av="72"
-                        name="order[888562354942]"
-                        onBlur={() => setEdited(true)}
-                      />{" "}
-                      {funHash(product.name + color + size)}
+              {colors.map((color, index) => {
+                return (
+                  <tr key={index}>
+                    <td className="p-1">
+                      <span
+                        className="inline-block w-4 h-4"
+                        style={{ backgroundColor: nameToColor(color) }}
+                      ></span>
+                      <span> {color}</span>
                     </td>
-                  ))}
-                </tr>
-              ))}
+                    {sizes.map((size, index) => (
+                      <td
+                        key={size}
+                        name={`input${index}`}
+                        style={{ textAlign: "center" }}
+                        className="p-2"
+                      >
+                        <input
+                          type="number"
+                          name={`input-${index}`}
+                          required={true}
+                          min="0"
+                          max={funHash(product.name + color + size)}
+                          className="order order-amount"
+                          onChange={handleInputChange}
+                          onBlur={(e) => {
+                            setEdited(true);
+                          }}
+                        />{" "}
+                        {funHash(product.name + color + size)}
+                      </td>
+                    ))}
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
@@ -94,11 +127,14 @@ export default function Card({ product }) {
               value="Save"
               className="bg-indigo-800 text-white rounded py-1 px-2 cursor-pointer"
               name="save_product"
+              onClick={() => {
+                setCart({ ...cart, total: cardTotal + cart.total });
+                setEdited(false);
+              }}
             />
           </div>
-          ${" "}
           <span className="text-right product_total_price text-xl inline-block mt-2">
-            0
+            {formatter.format(cardTotal)}
           </span>
         </div>
       </div>
