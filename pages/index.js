@@ -37,6 +37,18 @@ export default function Home({ products }) {
       <div className="container pt-16 px-4 h-full min-h-full">
         {!viewCart ? (
           <>
+            <div
+              class="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4"
+              role="alert"
+            >
+              <p class="font-bold">Technical difficulties</p>
+              <p>
+                Sorry, we are currently experiencing temporary technical
+                difficulties. We are working to resolve the issue as quickly as
+                possible. Thank you for your patience.
+              </p>
+            </div>
+
             <h3 className="mt-12 text-3xl">Current</h3>
             <Filters
               activeSeason={activeSeason}

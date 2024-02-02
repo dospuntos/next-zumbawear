@@ -1,6 +1,7 @@
 export function nameToColor(name) {
   switch (name.toLowerCase().trim()) {
     case "bold black":
+    case "charcoal black":
     case "black":
       return "#000000";
     case "viva la red":
@@ -13,6 +14,7 @@ export function nameToColor(name) {
     case "red":
       return "#ff0000";
     case "caution":
+    case "golden ticket":
       return "#fff200";
     case "iridescent":
       return "#857f81";
@@ -46,6 +48,9 @@ export function nameToColor(name) {
       return "#be1e2d";
     case "zumba green":
       return "#e4de52";
+    case "military green":
+    case "military":
+      return "#5a543d";
     default:
       return "#0000ff";
   }
