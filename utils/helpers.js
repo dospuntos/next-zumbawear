@@ -2,6 +2,8 @@ export function nameToColor(name) {
   switch (name.toLowerCase().trim()) {
     case "bold black":
     case "charcoal black":
+    case "dark charcoal":
+    case "stone":
     case "black":
       return "#000000";
     case "viva la red":
@@ -23,32 +25,47 @@ export function nameToColor(name) {
     case "silver":
       return "#6d6e71";
     case "purple pop":
+    case "purple":
+    case "wildflower":
       return "#663d9d";
     case "gumball":
+    case "deep pink":
+    case "pink":
       return "#d62e92";
     case "get in lime":
       return "#70dd82";
     case "really red-y":
       return "#be1e2d";
     case "denim":
+    case "deep denim":
       return "#6F8FAF";
     case "groovin' green":
       return "#348542";
     case "oh orange":
+    case "mango":
+    case "cha-cha cherry":
       return "#ffa832";
+    case "yellow":
+      return "#eef473";
     case "sea me stuntin'":
       return "#aed0db";
     case "blue lightning":
+    case "aqua blue":
+    case "totally turquoise":
     case "be blue":
+    case "ocean":
       return "#057aa3";
     case "orchid":
+    case "golden sun":
       return "#c44259";
     case "fire red":
     case "cherry red":
+    case "red hot":
       return "#be1e2d";
     case "zumba green":
       return "#e4de52";
     case "military green":
+    case "army green":
     case "military":
       return "#5a543d";
     default:
