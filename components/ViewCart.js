@@ -107,7 +107,7 @@ export default function ViewCart() {
             <div className="text-xl">$ 10,73</div>
 
             <div className="block text-sm font-medium text-red-800 bg-red-100 p-2 my-2">
-              ⚠️ Minimum order value: 500,00
+              ⚠️ Minimum order value: $250,00
             </div>
 
             <div className="mt-2">
@@ -157,7 +157,7 @@ export default function ViewCart() {
                   id="addressee"
                   maxlength="35"
                   className="form-input block w-full sm:text-sm sm:leading-5"
-                  value="Johan Wagenheim"
+                  value="Joanne Tatiana Maidana L"
                   placeholder=""
                   required="required"
                 />
